@@ -3,7 +3,7 @@ const UserRouter = require("./routes/UserRouter");
 const BookRouter = require("./routes/BookRouter");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
-
+const cors = request("cors");
 const app = express();
 require("dotenv").config({
   path: process.env.NODE_ENV == "test" ? ".env.test" : ".env",
@@ -14,6 +14,8 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 console.log("ENV file in work is:", process.env.NODE_ENV);
+
+app.use(cors());
 
 app.use(express.json());
 

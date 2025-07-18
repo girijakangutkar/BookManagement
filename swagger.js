@@ -10,7 +10,9 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url:
+          "https://bookmanagement-kh07.onrender.com/" ||
+          "http://localhost:3000",
       },
     ],
     components: {
