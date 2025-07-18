@@ -18,6 +18,6 @@ beforeAll(async () => {
 afterAll(async () => {
   await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
-  if (redis) await redis.quit();
+  //   if (redis) await redis.quit();
   console.log("DB deleted");
 });
