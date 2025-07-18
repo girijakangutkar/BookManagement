@@ -5,6 +5,45 @@ const BookRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const cron = require("node-cron");
 
+// /**
+//  * @openapi
+//  * /app/books:
+//  *   get:
+//  *     summary: Retrieve all books for the logged-in user
+//  *     tags: [Books]
+//  *     security:
+//  *       - bearerAuth: []
+//  *     parameters:
+//  *       - in: header
+//  *         name: Authorization
+//  *         required: true
+//  *         schema:
+//  *           type: string
+//  *         description: Bearer JWT token
+//  *     responses:
+//  *       200:
+//  *         description: Cached or DB books returned
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: object
+//  *               properties:
+//  *                 msg:
+//  *                   type: string
+//  *                 data:
+//  *                   type: array
+//  *                   items:
+//  *                     $ref: '#/components/schemas/Book'
+//  *                 cached:
+//  *                   type: array
+//  *                   items:
+//  *                     $ref: '#/components/schemas/Book'
+//  *       404:
+//  *         description: Token missing
+//  *       500:
+//  *         description: Server error
+//  */
+
 BookRouter.get("/books", async (req, res) => {
   try {
     const token = req.headers?.authorization.split(" ")[1];
@@ -31,6 +70,38 @@ BookRouter.get("/books", async (req, res) => {
   }
 });
 
+// /**
+//  * @openapi
+//  * /app/books:
+//  *   post:
+//  *     summary: Add a new book for the logged-in user
+//  *     tags: [Books]
+//  *     security:
+//  *       - bearerAuth: []
+//  *     requestBody:
+//  *       required: true
+//  *       content:
+//  *         application/json:
+//  *           schema:
+//  *             $ref: '#/components/schemas/Book'
+//  *     responses:
+//  *       200:
+//  *         description: Book successfully added
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: object
+//  *               properties:
+//  *                 msg:
+//  *                   type: string
+//  *                 bookList:
+//  *                   $ref: '#/components/schemas/Book'
+//  *       404:
+//  *         description: Token missing
+//  *       500:
+//  *         description: Server error
+//  */
+
 BookRouter.post("/books", async (req, res) => {
   try {
     const token = req.headers?.authorization.split(" ")[1];
@@ -49,6 +120,52 @@ BookRouter.post("/books", async (req, res) => {
     res.status(500).json({ msg: "Something went wrong", error: error.message });
   }
 });
+
+// /**
+//  * @openapi
+//  * /app/books/{id}:
+//  *   put:
+//  *     summary: Update an existing book
+//  *     tags: [Books]
+//  *     security:
+//  *       - bearerAuth: []
+//  *     parameters:
+//  *       - in: path
+//  *         name: id
+//  *         required: true
+//  *         schema:
+//  *           type: string
+//  *         description: Book ID
+//  *     requestBody:
+//  *       required: true
+//  *       content:
+//  *         application/json:
+//  *           schema:
+//  *             type: object
+//  *             properties:
+//  *               name:
+//  *                 type: string
+//  *               author:
+//  *                 type: string
+//  *               genre:
+//  *                 type: string
+//  *     responses:
+//  *       200:
+//  *         description: Book updated successfully
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: object
+//  *               properties:
+//  *                 msg:
+//  *                   type: string
+//  *                 updatedBook:
+//  *                   $ref: '#/components/schemas/Book'
+//  *       404:
+//  *         description: Token missing or book not found
+//  *       500:
+//  *         description: Server error
+//  */
 
 BookRouter.put("/books/:id", async (req, res) => {
   try {
@@ -71,16 +188,45 @@ BookRouter.put("/books/:id", async (req, res) => {
     const updatedBook = await BookModel.findByIdAndUpdate(bookId, updateData, {
       new: true,
     });
-    res
-      .status(200)
-      .json({
-        msg: "Book data updated successfully.",
-        updatedBook: updatedBook,
-      });
+    res.status(200).json({
+      msg: "Book data updated successfully.",
+      updatedBook: updatedBook,
+    });
   } catch (error) {
     res.status(500).json({ msg: "Something went wrong", error: error.message });
   }
 });
+
+// /**
+//  * @openapi
+//  * /app/books/{id}:
+//  *   delete:
+//  *     summary: Delete a book
+//  *     tags: [Books]
+//  *     security:
+//  *       - bearerAuth: []
+//  *     parameters:
+//  *       - in: path
+//  *         name: id
+//  *         required: true
+//  *         schema:
+//  *           type: string
+//  *         description: Book ID
+//  *     responses:
+//  *       200:
+//  *         description: Book deleted
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: object
+//  *               properties:
+//  *                 msg:
+//  *                   type: string
+//  *       404:
+//  *         description: Token missing or book not found
+//  *       500:
+//  *         description: Server error
+//  */
 
 BookRouter.delete("/books/:id", async (req, res) => {
   try {
@@ -107,6 +253,42 @@ BookRouter.delete("/books/:id", async (req, res) => {
   }
 });
 
+// /**
+//  * @openapi
+//  * /app/books/bulk:
+//  *   post:
+//  *     summary: Submit multiple books for later insertion via cron
+//  *     tags: [Books]
+//  *     security:
+//  *       - bearerAuth: []
+//  *     requestBody:
+//  *       description: Array of books to queue
+//  *       required: true
+//  *       content:
+//  *         application/json:
+//  *           schema:
+//  *             type: object
+//  *             properties:
+//  *               books:
+//  *                 $ref: '#/components/schemas/BulkBook'
+//  *     responses:
+//  *       202:
+//  *         description: Books queued for later insertion
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: object
+//  *               properties:
+//  *                 msg:
+//  *                   type: string
+//  *       400:
+//  *         description: Invalid or empty books array
+//  *       401:
+//  *         description: Token missing
+//  *       500:
+//  *         description: Server error
+//  */
+
 BookRouter.post("/books/bulk", async (req, res) => {
   try {
     const token = req.headers?.authorization?.split(" ")[1];
@@ -128,7 +310,7 @@ BookRouter.post("/books/bulk", async (req, res) => {
   }
 });
 
-cron.schedule("*/2 * * * *", async () => {
+cron.schedule("*/5 * * * *", async () => {
   console.log("Cron job running for bulk book insertion...");
 
   try {
