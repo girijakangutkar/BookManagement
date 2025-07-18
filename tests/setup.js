@@ -22,9 +22,9 @@ beforeAll(async () => {
     });
 }, 15000);
 
-// afterAll(async () => {
-//   await mongoose.connection.dropDatabase();
-//   await mongoose.connection.close();
-//   //   if (redis) await redis.quit();
-//   console.log("DB deleted");
-// }, 15000);
+afterAll(async () => {
+  await mongoose.connection.dropDatabase();
+  await mongoose.connection.close();
+  //   if (redis) await redis.quit();
+  console.log("DB deleted");
+}, 15000);
