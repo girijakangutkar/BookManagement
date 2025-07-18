@@ -73,7 +73,10 @@ BookRouter.put("/books/:id", async (req, res) => {
     });
     res
       .status(200)
-      .json({ msg: "Book data updated successfully.", updatedBook });
+      .json({
+        msg: "Book data updated successfully.",
+        updatedBook: updatedBook,
+      });
   } catch (error) {
     res.status(500).json({ msg: "Something went wrong", error: error.message });
   }

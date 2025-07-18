@@ -19,7 +19,7 @@ UserRouter.post("/signup", async (req, res) => {
         res.status(500).json({ msg: "Something went wrong while signup" });
       }
       const newUser = await UserModel.create({ name, email, password: hash });
-      res.status(200).json({ msg: "User signup success", newUser });
+      res.status(201).json({ msg: "User signup success", newUser: newUser });
     });
   } catch (error) {
     res.status(500).json({ msg: "Something went wrong", error: error.message });
