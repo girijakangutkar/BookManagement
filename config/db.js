@@ -7,7 +7,7 @@ mongoose
     family: 4,
   })
   .then(() => {
-    console.log("DB connected");
+    console.log(`DB connected ${process.env.Mongo_URI}`);
   })
   .catch((err) => {
     console.log("Error while connecting to the DB");
