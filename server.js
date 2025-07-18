@@ -1,8 +1,8 @@
 const express = require("express");
 const UserRouter = require("./routes/UserRouter");
 const BookRouter = require("./routes/BookRouter");
-// const swaggerUi = require("swagger-ui-express");
-// const swaggerSpec = require("./swagger");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger");
 
 const app = express();
 require("dotenv").config({
@@ -17,7 +17,7 @@ console.log("ENV file in work is:", process.env.NODE_ENV);
 
 app.use(express.json());
 
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/", (req, res) => {
   res.status(200).json({ msg: "Book Management is working fine" });

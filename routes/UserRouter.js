@@ -5,6 +5,37 @@ const saltRounds = 10;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+/**
+ * @openapi
+ * /api/signup:
+ *   post:
+ *     summary: Create a new user account
+ *     description: Hashes password and creates user if email is not already registered.
+ *     tags:
+ *       - User
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: User created or already existed
+ *       500:
+ *         description: Server error
+ */
 UserRouter.post("/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -26,6 +57,38 @@ UserRouter.post("/signup", async (req, res) => {
   }
 });
 
+/**
+ * @openapi
+ * /api/login:
+ *   post:
+ *     summary: Log in a user
+ *     description: Validates credentials and returns a JWT token.
+ *     tags:
+ *       - User
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *       201:
+ *         description: Incorrect password
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
 UserRouter.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;

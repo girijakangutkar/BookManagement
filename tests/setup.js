@@ -15,7 +15,7 @@ beforeAll(async () => {
       family: 4,
     })
     .then(() => {
-      console.log(`DB connected ${process.env.MONGO_URI}`);
+      console.log(`DB connected`);
     })
     .catch((err) => {
       console.log("Error in monogoDB connection", err.message);
