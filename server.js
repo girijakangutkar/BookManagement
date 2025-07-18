@@ -3,7 +3,7 @@ const UserRouter = require("./routes/UserRouter");
 const BookRouter = require("./routes/BookRouter");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
-const cors = request("cors");
+const cors = require("cors");
 const app = express();
 require("dotenv").config({
   path: process.env.NODE_ENV == "test" ? ".env.test" : ".env",
