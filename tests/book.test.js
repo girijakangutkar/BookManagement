@@ -8,11 +8,11 @@ let userId;
 let bookId;
 
 beforeAll(async () => {
-  if (!process.env.Mongo_URI) {
+  if (!process.env.MONGO_URI) {
     throw new Error("Mongo URI is not defined");
   }
 
-  await mongoose.connect(process.env.Mongo_URI, {
+  await mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     family: 4,
