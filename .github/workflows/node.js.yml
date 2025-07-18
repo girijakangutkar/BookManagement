@@ -1,13 +1,9 @@
 name: Node.js CI
 
-on:
-  push:
-    branches: ["master"]
-  pull_request:
-    branches: ["master"]
+on: [push, pull_request]
 
 env:
-  MONGO_URI: ${{ secrets.MONGO_URI }}
+  Mongo_URI: ${{ secrets.Mongo_URI }}
   JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
 jobs:
@@ -21,29 +17,24 @@ jobs:
     services:
       redis:
         image: redis:6
-      ports:
-        - 6379:6379
-      options: >-
-        --health-cmd="redis-cli ping"
-        --health-interval=10s
-        --health-timeout=5s
-        --health-retries=5
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - uses: actions/checkout@v4
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
-
-      - run: npm install
+          cache: npm
+      - run: npm ci
       - run: npm run build --if-present
       - run: npm test
-
       - name: Build Docker image
         run: docker build -t book-management .
-
       - name: Run Docker container
         run: docker run -d -p 3000:3000 --name nodeapp book-management
