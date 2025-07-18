@@ -2,20 +2,20 @@
 
 ---
 Book management with redis and mongoDB.
--- Redis for caching and bulk insertion
--- MongoDB for data storage
--- Tested all the routes
--- Applied github actions
+- Redis for caching and bulk insertion
+- MongoDB for data storage
+- Tested all the routes
+- Applied github actions
 
 ---
 
 ## Tools
 
--- Version is controlled by gitHub
--- Deployed on Render
--- Redis
--- Docker
--- Node.js
+- Version is controlled by gitHub
+- Deployed on Render
+- Redis
+- Docker
+- Node.js
 
 ## 🚀 Features
 
