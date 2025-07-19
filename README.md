@@ -2,7 +2,6 @@
 # 📘 Book Management
 
 [![Render Status](https://img.shields.io/badge/Render-Live-brightgreen)](https://bookmanagement-kh07.onrender.com)
-[![GitHub Actions Status](https://github.com/girijakangutkar/BookManagement/workflows/Node%20CI/badge.svg)](https://github.com/girijakangutkar/BookManagement/actions)
 
 ---
 
