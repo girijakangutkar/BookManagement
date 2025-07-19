@@ -1,7 +1,6 @@
 
 # 📘 Book Management
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 [![Render Status](https://img.shields.io/badge/Render-Live-brightgreen)](https://bookmanagement-kh07.onrender.com)
 [![GitHub Actions Status](https://github.com/girijakangutkar/BookManagement/workflows/Node%20CI/badge.svg)](https://github.com/girijakangutkar/BookManagement/actions)
 
@@ -120,12 +119,6 @@ This project uses GitHub Actions for continuous integration and continuous deplo
 > 3.  Make your changes and write appropriate tests.
 > 4.  Ensure all tests pass.
 > 5.  Submit a pull request with a clear description of your changes.
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
